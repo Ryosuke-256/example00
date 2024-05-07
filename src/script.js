@@ -1,4 +1,6 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -62,11 +64,14 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+const controls = new OrbitControls( camera, renderer.domElement )
+
 /**
  * Animate
  */
 const animate = () =>
 {
+    controls.update()
     // Render
     renderer.render(scene, camera)
 
