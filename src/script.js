@@ -7,21 +7,32 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0.7,0.7,0.7)
+scene.background = new THREE.Color(0.2,0.2,0.2)
 
-//ジオメトリ
-const geometry=new THREE.SphereGeometry(300,30,30)
-//マテリアル
-const material =new THREE.MeshStandardMaterial({color:0xff0000, roughness:0.0, metalness: 0.0})
-//メッシュ
-const sphere=new THREE.Mesh(geometry,material)
-//シーンにメッシュ追加
-scene.add(sphere)
+//plane1
+
+const plane1_geometry = new THREE.PlaneGeometry(1920,1080,10,10)
+const plane1_material =new THREE.MeshStandardMaterial({color:0xffffff,side: THREE.DoubleSide, roughness:0.0, metalness: 0.0})
+const plane1_mesh=new THREE.Mesh(plane1_geometry,plane1_material)
+plane1_mesh.rotation.set(Math.PI/2,0,0)
+plane1_mesh.position.set(0,-100,0)
+scene.add(plane1_mesh)
+
+//box1
+const box1_geometry=new THREE.BoxGeometry(300,300,300)
+const box1_material =new THREE.MeshStandardMaterial({color:0xff0000, roughness:0.0, metalness: 0.0})
+const box1_mesh=new THREE.Mesh(box1_geometry,box1_material)
+scene.add(box1_mesh)
 
 //平行光源
-const directionalLight =new THREE.DirectionalLight(0xffffff)
+const directionalLight =new THREE.DirectionalLight(0xffffff,0.5)
 directionalLight.position.set(1,1,1)
 scene.add(directionalLight)
+
+//点光源
+const pointlight = new THREE.PointLight(0xffffff,100,0,2)
+pointlight.position.set(500,200,0)
+scene.add(pointlight)
 
 /**
  * Sizes
@@ -75,7 +86,7 @@ const animate = () =>
     // Render
     renderer.render(scene, camera)
 
-    sphere.rotation.y+=0.01;
+    box1_mesh.rotation.y+=0.01;
     // Call tick again on the next frame
     window.requestAnimationFrame(animate)
 }
